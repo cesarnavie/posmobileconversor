@@ -1,3 +1,4 @@
+import { ConversorService } from './../../providers/conversor-service';
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
@@ -12,11 +13,16 @@ export class HomePage {
   valorEmLibras = 1.0;
   valorEmDolares = 1.0;
 
-  taxaDolar = 0.31925;
-  taxaEuro = 0.29546;
-  taxaLibra = 0.25587;
+  taxaDolar = 0;
+  taxaEuro = 0;
+  taxaLibra = 0;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public conversor: ConversorService) {
+    conversor.getCotacoes().then(cotacoes => {
+      this.taxaDolar = cotacoes['USD'];
+      this.taxaEuro = cotacoes['EUR'];
+      this.taxaLibra = cotacoes['GBP'];
+    });
     
   }
 
